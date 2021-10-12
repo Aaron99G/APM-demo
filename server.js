@@ -13,7 +13,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/styles', express.static(path.join(__dirname, '/public/styles.css')))
+app.use('/styles', express.static(path.join(__dirname, './public/styles.css')))
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
@@ -34,7 +34,7 @@ app.post(('/api/student'), (req, res) => {
         res.status(200).send(students)
     } else if (name === '') {
         rollbar.error('No name given')
-        res.status(400).send('pleas provide a name')
+        res.status(400).send('please provide a name')
     } else {
         rollbar.error('Student already exists')
         res.status(400).send('This student already exists')
