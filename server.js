@@ -26,11 +26,25 @@ app.post(('/api/student'), (req, res) => {
     let { name } = req.body
     name = name.trim()
 
-    students.push(name)
+    const index = students.findIndex(studentName => studentName = name)
 
-    rollbar.log('Student added succesfully', { author: "Aaron", type: 'Manual entry' })
+    if (index === -1 && name != '') {
+        students.push(name)
+        rollbar.log('Student added succesfully', { author: 'AG', type: 'manual entry' })
+        res.status(200).send(students)
+    } else if (name == '') {
+        rollbar.error('No name given')
+        res.status(400).send('pleas provide a name')
+    } else {
+        rollbar.error('Student already exists')
+        res.status(400).send('This student already exists')
+    }
 
-    res.status(200).send(students)
+    // students.push(name)
+
+    // rollbar.log('Student added succesfully', { author: "Aaron", type: 'Manual entry' })
+
+    // res.status(200).send(students)
 })
 
 app.use(rollbar.errorHandler())
