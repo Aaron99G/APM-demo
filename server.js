@@ -11,7 +11,7 @@ const rollbar = new Rollbar({
 const app = express();
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'))
+    res.sendFile(path.join(__dirname, '/public/index.html'))
     rollbar.info('html file served successfully')
 })
 
@@ -27,6 +27,8 @@ app.post(('/api/student'), (req, res) => {
 
     res.status(200).send(students)
 })
+
+app.use(rollbar.errorHandler())
 
 const port = process.env.PORT || 4400;
 
